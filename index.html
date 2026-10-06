@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Строгий вариант лендинга</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: как аккуратный документ. На ПК слева липкое оглавление, справа разделы; на телефоне одна колонка */
+:root{
+  --bg:#F6F7F9; --surface:#FFFFFF; --soft:#E9EEF5; --ink:#101B2C; --muted:#5A6677;
+  --accent:#1F4E8C; --accent-ink:#FFFFFF; --line:#DCE1E8;
+  --display:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0D121A; --surface:#141B26; --soft:#1A2436; --ink:#E5EAF1; --muted:#98A4B6;
+  --accent:#86ABE0; --accent-ink:#0B1424; --line:#253041; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D121A; --surface:#141B26; --soft:#1A2436; --ink:#E5EAF1; --muted:#98A4B6;
+  --accent:#86ABE0; --accent-ink:#0B1424; --line:#253041; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.65 var(--body)}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.label{font:500 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+.draft{border-bottom:1px solid var(--line);color:var(--muted);font-size:13px;text-align:center;padding:8px 16px;background:var(--surface)}
+
+header.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px;border-bottom:1px solid var(--line)}
+.logo{font:700 18px/1 var(--display)}
+.logo small{display:block;font:400 13px/1.3 var(--body);color:var(--muted);margin-top:4px}
+
+.btn{display:inline-flex;justify-content:center;align-items:center;background:var(--accent);color:var(--accent-ink);text-decoration:none;font:600 16px/1 var(--display);padding:16px 22px;border-radius:8px;border:0;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:hover{filter:brightness(1.08)}
+
+.hero{padding-block:48px 40px;display:grid;gap:28px}
+.hero h1{font-size:clamp(32px,5.4vw,56px);font-weight:700;max-width:18ch}
+.hero .lead{font-size:clamp(17px,2vw,19px);color:var(--muted);max-width:62ch}
+.hero .actions{display:flex;flex-wrap:wrap;gap:12px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.facts div{padding:18px 20px;display:grid;gap:4px;border-top:1px solid var(--line)}
+.facts div:first-child{border-top:0}
+@media (min-width:700px){.facts div{border-top:0;border-left:1px solid var(--line)}.facts div:first-child{border-left:0}}
+.facts b{font:600 18px/1.3 var(--display)}
+
+.layout{display:grid;gap:0;padding-block:24px 64px}
+nav.toc{display:none}
+@media (min-width:980px){
+  .layout{grid-template-columns:240px 1fr;gap:56px}
+  nav.toc{display:block;position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start}
+  nav.toc ol{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:2px;border-left:1px solid var(--line)}
+  nav.toc a{display:block;text-decoration:none;color:var(--muted);font-size:14px;padding:6px 0 6px 14px;margin-left:-1px;border-left:2px solid transparent}
+  nav.toc a:hover{color:var(--ink);border-left-color:var(--accent)}
+}
+main{min-width:0}
+
+.sec{padding-block:40px;border-top:1px solid var(--line);display:grid;gap:16px;scroll-margin-top:20px}
+.sec:first-child{border-top:0;padding-top:8px}
+.sec h2{font-size:clamp(24px,3.2vw,32px);font-weight:600}
+.sec p{max-width:66ch}
+.sec .muted{color:var(--muted)}
+.callout{background:var(--soft);border-radius:10px;padding:18px 20px;font-weight:500;max-width:66ch}
+
+.list{margin:0;padding:0;list-style:none;display:grid;border:1px solid var(--line);border-radius:10px;background:var(--surface);max-width:66ch}
+.list li{padding:14px 18px;border-top:1px solid var(--line);display:flex;gap:12px}
+.list li:first-child{border-top:0}
+.list li::before{content:"—";color:var(--accent)}
+
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags span{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:6px 12px;font-size:15px}
+
+.grid4{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.grid4 div{background:var(--surface);padding:20px;display:grid;gap:6px;align-content:start}
+.grid4 h3{font-size:18px;font-weight:600}
+.grid4 p{color:var(--muted);font-size:15px}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:s;max-width:66ch}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:16px;padding-block:16px;border-top:1px solid var(--line)}
+.steps li:first-child{border-top:0}
+.steps li::before{content:counter(s);font:600 15px/44px var(--display);text-align:center;width:44px;height:44px;border-radius:50%;background:var(--soft);color:var(--accent)}
+.steps b{font-family:var(--display);font-weight:600;display:block}
+.steps span{color:var(--muted);font-size:15px}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stats div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+.stats b{display:block;font:700 30px/1.1 var(--display);font-variant-numeric:tabular-nums}
+.stats span{color:var(--muted);font-size:14px}
+.ph{font:500 11px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#A15C00}
+:root[data-theme="dark"] .ph{color:#E8B15E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ph{color:#E8B15E}}
+
+.revs{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.rev{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:12px;align-content:start}
+.rev p{font-size:16px}
+.rev .who{color:var(--muted);font-size:14px}
+
+.faq{border:1px solid var(--line);border-radius:10px;background:var(--surface);max-width:72ch}
+.faq details{border-top:1px solid var(--line)}
+.faq details:first-child{border-top:0}
+.faq summary{cursor:pointer;padding:16px 18px;font:600 17px/1.4 var(--display);list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--accent);font-weight:400;font-size:22px;line-height:1}
+.faq details[open] summary::after{content:"−"}
+.faq details p{padding:0 18px 18px;color:var(--muted)}
+
+.contact{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px 22px;display:grid;gap:28px}
+@media (min-width:820px){.contact{grid-template-columns:1fr 1fr;padding:40px}}
+.contact h2{font-size:clamp(26px,3.6vw,36px);font-weight:700}
+.contact .txt{display:grid;gap:14px;min-width:0}
+.contact dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:15px}
+.contact dt{color:var(--muted)}
+.contact dd{margin:0}
+form.lead{display:grid;gap:14px;min-width:0}
+form.lead label{display:grid;gap:6px;font-size:14px;color:var(--muted)}
+form.lead input[type=tel],form.lead input[type=text]{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:13px 14px;width:100%}
+form.lead .check{display:flex;gap:10px;align-items:flex-start;font-size:13px}
+form.lead .check input{margin-top:3px;accent-color:var(--accent)}
+.form-error{color:#B3261E;font-size:14px}
+:root[data-theme="dark"] .form-error{color:#F2A49C}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .form-error{color:#F2A49C}}
+.ok{border:1px solid var(--line);border-radius:10px;padding:24px;display:grid;gap:6px}
+.ok b{font:600 20px/1.3 var(--display)}
+.ok small{color:var(--muted)}
+
+footer.site{border-top:1px solid var(--line);padding-block:28px 40px;color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+</style>
+</head>
+<body>
+
+
+<div class="draft">Черновик · вариант 2 из 3 «Строгий» · здесь есть дополнительные блоки «Как мы работаем» и «Вопросы» · название, цифры, контакты и отзывы — заглушки</div>
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo">Название НКО<small>Сопровождение по вопросам призыва и службы</small></div>
+    <a class="btn ghost" href="#contact">Консультация</a>
+  </header>
+
+  <section class="hero">
+    <div class="label">Призыв · воинский учёт · мобилизация · служба</div>
+    <h1>Законное решение для вашей конкретной ситуации</h1>
+    <p class="lead">Когда вопрос касается здоровья, службы и дальнейшей жизни, полагаться на случай или годами бороться с системой — не всегда разумный путь. Мы не вступаем в конфликт с государственными органами, а ищем законный и наиболее эффективный способ решения. Сначала разбираемся в возможностях, затем действуем.</p>
+    <div class="actions">
+      <a class="btn" href="#contact">Бесплатная консультация</a>
+      <a class="btn ghost" href="#how">Как мы работаем</a>
+    </div>
+    <div class="facts">
+      <div><span class="label">Первый шаг</span><b>Консультация бесплатно</b></div>
+      <div><span class="label">Подход</span><b>Только законные механизмы</b></div>
+      <div><span class="label">Для кого</span><b>Призывники, военные, родители</b></div>
+    </div>
+  </section>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Содержание">
+      <div class="label">Содержание</div>
+      <ol>
+        <li><a href="#s1">Почему не только юристы</a></li>
+        <li><a href="#s2">Кто мы</a></li>
+        <li><a href="#s3">Если решение военкомата не то</a></li>
+        <li><a href="#s4">Категория «В»</a></li>
+        <li><a href="#s5">С чем помогаем</a></li>
+        <li><a href="#how">Как мы работаем</a></li>
+        <li><a href="#s6">Опыт и результаты</a></li>
+        <li><a href="#reviews">Отзывы</a></li>
+        <li><a href="#faq">Вопросы</a></li>
+        <li><a href="#contact">Связаться</a></li>
+      </ol>
+    </nav>
+
+    <main>
+      <section class="sec" id="s1">
+        <h2>Почему не всегда стоит начинать с юристов</h2>
+        <p>Сегодня существует множество специалистов, предлагающих помощь в вопросах призыва и воинского учёта. Но наличие юриста и правильно оформленных документов само по себе не гарантирует нужного результата.</p>
+        <p class="muted">Иногда длительные обжалования и попытки решить всё исключительно через формальные процедуры только усложняют ситуацию.</p>
+        <p class="callout">Наш подход: не спорить ради спора, а искать практическое решение в рамках доступных законных механизмов.</p>
+      </section>
+
+      <section class="sec" id="s2">
+        <h2>Кто мы</h2>
+        <p>Мы не классическая юридическая компания и не предлагаем универсальные схемы для всех. Мы занимаемся практическим сопровождением сложных ситуаций, связанных с воинским учётом, призывом и службой.</p>
+        <div class="tags"><span>Категория годности</span><span>Бронирование</span><span>АГС</span><span>Воинский учёт</span><span>Другие вопросы</span></div>
+        <p class="muted">Не обещаем невозможного и не гарантируем результат там, где он зависит от решений государственных органов. Сначала изучаем ситуацию, документы и реальные возможности, после этого предлагаем варианты действий. Наша цель — решить вопрос максимально спокойно, эффективно и с минимальными рисками для клиента.</p>
+      </section>
+
+      <section class="sec" id="s3">
+        <h2>Если решение военкомата не соответствует вашей ситуации</h2>
+        <p>Даже при наличии подтверждённого заболевания и правильно оформленных документов решение военкомата может оказаться не таким, как вы ожидаете. На практике возникают ситуации, когда:</p>
+        <ul class="list">
+          <li>не устанавливают необходимую категорию</li>
+          <li>не снимают с учёта</li>
+          <li>требуют подписать документы, с которыми человек не согласен</li>
+        </ul>
+        <p class="muted">Порядок решения таких вопросов может существенно отличаться в зависимости от конкретной ситуации. Самостоятельное обжалование не всегда приводит к желаемому результату и нередко только усложняет дальнейшее решение вопроса. Поэтому важно оценить ситуацию и возможные риски до того, как проблема возникнет.</p>
+      </section>
+
+      <section class="sec" id="s4">
+        <h2>Категория «В» — не всегда окончательное решение</h2>
+        <p>Получение категории «В» освобождает от призыва в мирное время, но не означает, что вопросы воинского учёта полностью закрыты.</p>
+        <p class="muted">Законодательство и порядок мобилизационных мероприятий могут меняться. Поэтому важно понимать не только свою категорию сегодня, но и возможные последствия в дальнейшем.</p>
+        <p>Мы помогаем оценить текущий статус, документы и возможные риски, чтобы вы понимали дальнейший порядок действий.</p>
+      </section>
+
+      <section class="sec" id="s5">
+        <h2>Помогаем в разных ситуациях</h2>
+        <div class="grid4">
+          <div><h3>Повестки</h3><p>Разбираем, что означает повестка и какие есть варианты.</p></div>
+          <div><h3>Призыв и воинский учёт</h3><p>Категория годности, постановка и снятие с учёта.</p></div>
+          <div><h3>Мобилизационные вопросы</h3><p>Бронирование, отсрочки, текущий статус.</p></div>
+          <div><h3>Во время службы</h3><p>Проблемы, которые возникают у военнослужащих.</p></div>
+        </div>
+        <p class="muted">Работаем как с призывниками, так и с военнослужащими. Каждый случай рассматриваем индивидуально: сначала изучаем обстоятельства и документы, после чего определяем, можем ли помочь и какой вариант действий возможен.</p>
+      </section>
+
+      <section class="sec" id="how">
+        <h2>Как мы работаем</h2>
+        <ol class="steps">
+          <li><div><b>Вы оставляете заявку</b><span>Телефон или ник в Telegram, мы связываемся сами.</span></div></li>
+          <li><div><b>Бесплатная консультация</b><span>Разбираем ситуацию по телефону и говорим, можем ли помочь.</span></div></li>
+          <li><div><b>Изучаем документы</b><span>Смотрим, что есть на руках и какие возможности реальны.</span></div></li>
+          <li><div><b>Предлагаем варианты и стоимость</b><span>Цена зависит от ситуации и обсуждается при личном контакте.</span></div></li>
+          <li><div><b>Сопровождаем до результата</b><span>Подсказываем порядок действий на каждом этапе.</span></div></li>
+        </ol>
+      </section>
+
+      <section class="sec" id="s6">
+        <h2>Опыт и реальные результаты</h2>
+        <div class="stats">
+          <div><b>XXX</b><span>обращений</span></div>
+          <div><b>X лет</b><span>работы</span></div>
+          <div><b>XX</b><span>регионов</span></div>
+        </div>
+        <div class="ph">Цифры — заглушки, заменить на реальные</div>
+        <p>За время работы мы помогли людям в самых разных ситуациях, связанных с призывом, воинским учётом и прохождением службы. Среди наших клиентов — призывники, военнослужащие и родители, обращавшиеся по вопросам своих детей.</p>
+        <p class="muted">Мы не обещаем одинаковый результат в каждом случае: итог зависит от обстоятельств, документов и действующего законодательства. Поэтому сначала разбираемся в ситуации и только после этого определяем возможные пути решения.</p>
+      </section>
+
+      <section class="sec" id="reviews">
+        <h2>Отзывы</h2>
+        <div class="revs">
+          <article class="rev"><div class="ph">Пример отзыва — заменить на реальный</div><p>Сын получил повестку, мы не понимали, что делать. На первой консультации всё разложили по шагам, дальше вели до конца.</p><div class="who">Анна, мама призывника</div></article>
+          <article class="rev"><div class="ph">Пример отзыва — заменить на реальный</div><p>Категорию не устанавливали, хотя документы были. Разобрались, в чём проблема, и подсказали, как действовать.</p><div class="who">Дмитрий, 24 года</div></article>
+          <article class="rev"><div class="ph">Пример отзыва — заменить на реальный</div><p>Обратился уже во время службы. Честно сказали, какие есть варианты. Без лишних обещаний.</p><div class="who">Сергей, военнослужащий</div></article>
+        </div>
+      </section>
+
+      <section class="sec" id="faq">
+        <h2>Частые вопросы</h2>
+        <div class="faq">
+          <details><summary>Это законно?</summary><p>Да. Мы работаем только в рамках действующих законных механизмов и не вступаем в конфликт с государственными органами.</p></details>
+          <details><summary>Сколько стоит?</summary><p>Первая консультация бесплатная. Стоимость дальнейшей работы зависит от ситуации и обсуждается после разбора, при личном контакте.</p></details>
+          <details><summary>Вы гарантируете результат?</summary><p>Нет, там, где итог зависит от решений государственных органов, гарантий не даём. Сначала оцениваем ситуацию и честно говорим, какие варианты реальны.</p></details>
+          <details><summary>Можно обратиться родителям?</summary><p>Да, многие наши клиенты — родители, которые обращаются по вопросам своих детей.</p></details>
+          <details><summary>Вы работаете с другими городами?</summary><p>[Заглушка — уточнить у заказчика: регионы и формат работы, удалённо или очно.]</p></details>
+        </div>
+      </section>
+
+      <section class="sec" id="contact">
+        <div class="contact">
+          <div class="txt">
+            <h2>Чем раньше — тем проще</h2>
+            <p>Проблему, которую удалось выявить на начальном этапе, как правило, проще и быстрее решать, чем ситуацию, последствия которой уже приходится исправлять.</p>
+            <p class="muted">Прежде чем предпринимать самостоятельные действия, рекомендуем получить консультацию и оценить возможные варианты. Первая консультация бесплатно.</p>
+            <dl>
+              <dt>Telegram</dt><dd><a href="https://t.me/">@nko_placeholder</a></dd>
+              <dt>Телефон</dt><dd>+7 (XXX) XXX-XX-XX</dd>
+            </dl>
+          </div>
+          <div>
+            <form class="lead" data-lead novalidate>
+              <label for="v2-phone">Телефон<input id="v2-phone" name="phone" type="tel" placeholder="+7 900 000-00-00" autocomplete="tel"></label>
+              <label for="v2-tg">Ник в Telegram<input id="v2-tg" name="tg" type="text" placeholder="@username"></label>
+              <label class="check" for="v2-consent"><input id="v2-consent" name="consent" type="checkbox">Согласен на обработку персональных данных</label>
+              <p class="form-error" hidden></p>
+              <button class="btn" type="submit">Записаться на консультацию</button>
+            </form>
+            <div class="ok" hidden><b>Заявка принята. Мы свяжемся с вами.</b><small>Это прототип: данные никуда не отправляются.</small></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site">
+    <span>© Название НКО, 2026</span>
+    <span>Telegram @nko_placeholder · +7 (XXX) XXX-XX-XX</span>
+  </footer>
+</div>
+
+<script>
+document.querySelectorAll('form[data-lead]').forEach(function(f){
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var p=f.querySelector('[name=phone]').value.trim(),t=f.querySelector('[name=tg]').value.trim(),err=f.querySelector('.form-error');
+    if(!p&&!t){err.textContent='Укажите телефон или ник в Telegram, хотя бы что-то одно.';err.hidden=false;return}
+    if(!f.querySelector('[name=consent]').checked){err.textContent='Отметьте согласие на обработку данных.';err.hidden=false;return}
+    err.hidden=true;f.hidden=true;f.nextElementSibling.hidden=false;
+  });
+});
+</script>
+
+</body>
+</html>
